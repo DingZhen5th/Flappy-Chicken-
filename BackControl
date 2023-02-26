@@ -1,0 +1,35 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BackControl : MonoBehaviour
+{
+    public float speed = 2f;
+    public float width = 13.23f;
+    public bool resetPipeHeight = false;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        foreach (Transform trans in transform)
+        {
+            Vector3 v = trans.position;
+            v.x -= speed * Time.deltaTime;
+            if(v.x < -width)
+            {
+                v.x += width * 2;
+                if(resetPipeHeight)
+                {
+                    PipeControl pipe = trans.GetComponentInChildren<PipeControl>();
+                    pipe.ResetHight();
+                }
+            }
+            trans.position = v;
+        }
+    }
+}
